@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "engines": {
+    "node": "16.13.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "license": "MIT"
+}
