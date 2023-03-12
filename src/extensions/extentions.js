@@ -379,38 +379,6 @@ export const LIBRARY = {
   },
   SKETCH: {
     NAME: 'SKETCH',
-    // UTILS: {
-    //   NAME: 'UTILS',
-    //   make_frame: (linewidth = 1, color = '#6b84b0') => {
-    //     const two = LIBRARY.SKETCH.engine;
-    //     const rect = two.makeRectangle(
-    //       two.width / 2,
-    //       two.height / 2,
-    //       two.width,
-    //       two.height
-    //     );
-    //     rect.stroke = color;
-    //     rect.linewidth = linewidth;
-    //     rect.noFill();
-    //   },
-    //   make_grid: (size = 30, linewidth = 1, color = '#6b84b0') => {
-    //     const two = new Two({
-    //       type: Two.Types.canvas,
-    //       width: LIBRARY.SKETCH.engine.width,
-    //       height: LIBRARY.SKETCH.engine.height
-    //     });
-    //     const a = two.makeLine(two.width / 2, 0, two.width / 2, two.height);
-    //     const b = two.makeLine(0, two.height / 2, two.width, two.height / 2);
-    //     a.stroke = b.stroke = color;
-    //     a.linewidth = b.linewidth = linewidth;
-    //     two.update();
-
-    //     const imageData = two.renderer.domElement.toDataURL('image/png');
-    //     LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.backgroundImage = `url(${imageData})`;
-    //     LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.backgroundSize = `${size}px`;
-    //   }
-    // },
-
     sketch: (
       width = 100,
       height = 100,
@@ -616,6 +584,8 @@ export const LIBRARY = {
     },
     animate: (shape, settings = new Map()) =>
       shape.animate(Object.fromEntries(settings)),
+    ease: (runner, cmd) => runner.ease(cmd),
+    beziere: (runner, x1, y1, x2, y2) => runner.beziere(x1, y1, x2, y2),
     node: (shape) => shape.node,
   },
 }
