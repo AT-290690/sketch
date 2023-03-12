@@ -37,15 +37,14 @@ const tokens = {
     return rest.reduce((acc, x) => (acc *= x), first)
   },
   ['/']: (args, env) => {
-    if (args.length < 2)
-      throw new RangeError('Invalid number of arguments to :')
+    if (args.length < 1)
+      throw new RangeError('Invalid number of arguments to /')
     const operands = args.map((a) => evaluate(a, env))
     if (operands.some((n) => typeof n !== 'number'))
-      throw new TypeError('Invalid use of : [] (Not all args are numbers)')
-    const [first, ...rest] = operands
-    if (rest.includes(0))
-      throw new RangeError('Invalid operation to : (devision by zero)')
-    return rest.reduce((acc, x) => (acc /= x), first)
+      throw new TypeError('Invalid use of / [] (Not all args are numbers)')
+    if (operands.includes(0))
+      throw new RangeError('Invalid operation to / (devision by zero)')
+    return operands.reduce((acc, x) => (acc *= 1 / x), 1)
   },
   ['%']: (args, env) => {
     if (args.length !== 2)

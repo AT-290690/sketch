@@ -119,10 +119,13 @@ const compile = () => {
           return '(' + tree.args.map((x) => dfs(x, locals)).join('===') + ');'
         case '!=':
           return '(' + tree.args.map((x) => dfs(x, locals)).join('!==') + ');'
+        case '/':
+          return (
+            '(' + tree.args.map((x) => `1 / ${dfs(x, locals)}`).join('*') + ');'
+          )
         case '+':
         case '-':
         case '*':
-        case '/':
         case '>=':
         case '<=':
         case '>':

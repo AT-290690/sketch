@@ -339,6 +339,12 @@ export const LIBRARY = {
     set_timeout: (callback, time) => setTimeout(callback, time),
     set_interval: (callback, time = 1000) => setInterval(callback, time),
     set_animation: (callback) => requestAnimationFrame(callback),
+    clear_intervals: () => {
+      const interval_id = window.setInterval(function () {},
+      Number.MAX_SAFE_INTEGER)
+      for (let i = 1; i < interval_id; ++i) window.clearInterval(i)
+      return interval_id
+    },
   },
   EVENT: {
     NAME: 'EVENT',
@@ -441,7 +447,8 @@ export const LIBRARY = {
     circle: (x, y, r) => ({ coords: [x, y, r], type: 'circle' }),
     ellipse: (x, y, w, h) => ({ coords: [x, y, w, h], type: 'ellipse' }),
     polygon: (vertecies) => ({ coords: [vertecies.items], type: 'polygon' }),
-    text: (text = 'text') => ({ content: text }),
+    text: (text = '') => ({ content: text }),
+    path: (path) => ({ coords: [path], type: 'path' }),
     fill: (shape, color) => {
       shape.fill = color
       return shape
@@ -608,14 +615,8 @@ export const LIBRARY = {
       return shape
     },
     animate: (shape, settings = new Map()) =>
-      shape.animate({
-        duration: settings.get('duration'),
-        delay: settings.get('delay'),
-        when: settings.get('when'),
-        swing: settings.get('swing'),
-        times: settings.get('times'),
-        wait: settings.get('wait'),
-      }),
+      shape.animate(Object.fromEntries(settings)),
+    node: (shape) => shape.node,
   },
 }
 
