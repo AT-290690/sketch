@@ -109,5 +109,5 @@ iframe {
   z-index: 1000;
 }
 .cm-tooltip-autocomplete {
-  background-color: #282828 !important;
+  background-color: var(--background-primary) !important;
 }

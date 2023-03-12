@@ -408,8 +408,8 @@ export const LIBRARY = {
     sketch: (
       width = 100,
       height = 100,
-      background = 'white',
-      border = 'black'
+      background = 'none',
+      border = 'none'
     ) => {
       const placeholder = document.getElementById('placeholder')
       if (placeholder) {
@@ -603,6 +603,19 @@ export const LIBRARY = {
       shape.addTo(LIBRARY.SKETCH.svg_canvas)
       return shape
     },
+    attribute: (shape, settings = new Map()) => {
+      shape.attr(Object.fromEntries(settings))
+      return shape
+    },
+    animate: (shape, settings = new Map()) =>
+      shape.animate({
+        duration: settings.get('duration'),
+        delay: settings.get('delay'),
+        when: settings.get('when'),
+        swing: settings.get('swing'),
+        times: settings.get('times'),
+        wait: settings.get('wait'),
+      }),
   },
 }
 
