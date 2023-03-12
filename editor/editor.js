@@ -10,6 +10,7 @@ import {
 const consoleElement = document.getElementById('console')
 const editorContainer = document.getElementById('editor-container')
 const droneButton = document.getElementById('drone')
+const shareButton = document.getElementById('share')
 const consoleEditor = CodeMirror(consoleElement)
 const iframeContainer = document.getElementById('window')
 const extensions = {
@@ -69,7 +70,7 @@ droneButton.addEventListener('click', () => {
     })
   )
 })
-
+shareButton.addEventListener('click', () => withCommand(';; share'))
 const cmds = {
   validate: ';; validate',
   assert: ';; assert',
@@ -143,6 +144,7 @@ const withCommand = (command = editor.getLine(0)) => {
         consoleEditor.setValue(link)
         consoleEditor.focus()
         consoleEditor.setSelection(0, link.length)
+        navigator.clipboard.writeText(link)
       }
 
       break
@@ -219,25 +221,12 @@ const registerSW = async () => {
 
 window.addEventListener('load', registerSW)
 editor.setValue(`<- [SKETCH; MATH] [LIBRARY]; 
-<- [sketch; background; line; circle; rectangle; polygon; text; write; group; add; add_to; fill; stroke; fill_style; draw; move; scale; rotate; opacity] [SKETCH];
+<- [sketch; line; circle; rectangle; polygon; text; write; group; add; add_to; fill; stroke; fill_style; draw; move; scale; rotate; opacity] [SKETCH];
 <- [random_int] [MATH];
-sketch [400; 280];
+sketch [400; 280; "black"; "#6b84b0"];
 ;; fill style can be hachure solid zigzag cross-hatch dots sunburst dashed or zigzag-line
 |> [group []; 
-    add [|> [circle [105; 105; 45];
-                 fill ["gray"]; 
-                 fill_style ["solid"]; 
-                 stroke ["none"]; 
-                 draw []; 
-                 opacity [0.8]]]; 
-    add [|> [circle [100; 100; 50];
-                 fill ["red"]; 
-                 fill_style ["solid"]; 
-                 stroke ["none"]; 
-                 draw []]];
-    add [|> [text ["ball"]; 
-             fill ["black"]; 
-             write []; 
-             move [90; 130]]];
+    add [|> [rectangle [80; 80; 50; 50]; fill ["red"]; fill_style ["solid"]; stroke ["white"]; draw []]];
+    add [|> [text ["rectangle"]; fill ["white"]; write []; move [70; 130]]]; 
     move [170; 100]]
 `)

@@ -404,9 +404,13 @@ export const LIBRARY = {
     //     LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.backgroundSize = `${size}px`;
     //   }
     // },
-    background: (color = 'var(--background-primary)') =>
-      (LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.background = color),
-    sketch: (width = 100, height = 100) => {
+
+    sketch: (
+      width = 100,
+      height = 100,
+      background = 'white',
+      border = 'black'
+    ) => {
       const placeholder = document.getElementById('placeholder')
       if (placeholder) {
         placeholder.style.display = 'none'
@@ -423,8 +427,13 @@ export const LIBRARY = {
       LIBRARY.SKETCH.svg_canvas = SVG().size(width, height)
       LIBRARY.SKETCH.svg_canvas.addTo(container)
       LIBRARY.SKETCH.rough_engine = rough.svg(LIBRARY.SKETCH.svg_canvas)
+
       return SVG(
-        LIBRARY.SKETCH.rough_engine.rectangle(0, 0, width, height)
+        LIBRARY.SKETCH.rough_engine.rectangle(0, 0, width, height, {
+          stroke: border,
+          fill: background,
+          fillStyle: 'solid',
+        })
       ).addTo(LIBRARY.SKETCH.svg_canvas)
     },
     line: (x1, y1, x2, y2) => ({ coords: [x1, y1, x2, y2], type: 'line' }),
