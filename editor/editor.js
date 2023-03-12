@@ -138,6 +138,7 @@ const withCommand = (command = editor.getLine(0)) => {
       break
     case cmds.share:
       {
+        const encoding = encodeBase64(value)
         const link = `https://at-290690.github.io/sketch/?l=${encodeURIComponent(
           encodeBase64(value)
         )}`
@@ -145,6 +146,7 @@ const withCommand = (command = editor.getLine(0)) => {
         consoleEditor.focus()
         consoleEditor.setSelection(0, link.length)
         navigator.clipboard.writeText(link)
+        window.localStorage.setItem('HLP', value)
       }
 
       break
@@ -220,13 +222,16 @@ const registerSW = async () => {
 }
 
 window.addEventListener('load', registerSW)
-editor.setValue(`<- [SKETCH; MATH] [LIBRARY]; 
+editor.setValue(
+  window.localStorage.getItem('HLP') ||
+    `<- [SKETCH] [LIBRARY]; 
 <- [sketch; line; circle; rectangle; polygon; text; write; group; add; add_to; fill; stroke; fill_style; draw; move; scale; rotate; opacity] [SKETCH];
-<- [random_int] [MATH];
 sketch [400; 280; "black"; "#6b84b0"];
 ;; fill style can be hachure solid zigzag cross-hatch dots sunburst dashed or zigzag-line
 |> [group []; 
     add [|> [rectangle [80; 80; 50; 50]; fill ["red"]; fill_style ["solid"]; stroke ["white"]; draw []]];
     add [|> [text ["rectangle"]; fill ["white"]; write []; move [70; 130]]]; 
     move [170; 100]]
-`)
+`
+)
+withCommand()

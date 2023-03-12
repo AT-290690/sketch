@@ -2,8 +2,8 @@
   --gutters: #ebe7e5;
   --linenumbers: #897e56;
   --border: #6b84b0;
-  --background-primary: #282828;
-  --background-secondary: #77777799;
+  --background-primary: #161616;
+  --background-secondary: #58575786;
   --gutters-border: 1px solid transparent;
   --border-width: 1px;
   --error: #e93838;
@@ -16,7 +16,7 @@
   --drone4: #282828;
   --hover: #555353;
 
-  --comment: #546a90;
+  --comment: #37455e;
   --operator: #96aad6;
   --number: #7abcf3;
   --keyword: #c6dbf2;
