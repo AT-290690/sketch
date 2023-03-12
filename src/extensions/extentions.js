@@ -522,6 +522,19 @@ export const LIBRARY = {
       shape.fillStyle = style
       return shape
     },
+    fill_styles: (index) => {
+      const all = Inventory.of(
+        'hachure',
+        'solid',
+        'zigzag',
+        'cross-hatch',
+        'dots',
+        'sunburst',
+        'dashed',
+        'zigzag-line'
+      )
+      return index != undefined ? all.at(index) : all
+    },
     roughness: (shape, amount) => {
       shape.roughness = amount
       return shape
