@@ -336,6 +336,13 @@ export const LIBRARY = {
     polygon: (vertecies) => ({ coords: [vertecies.items], type: 'polygon' }),
     text: (text = '') => ({ content: text }),
     path: (path) => ({ coords: [path], type: 'path' }),
+    rect: (w, h) => ({ coords: [0, 0, w, h ?? w], type: 'rectangle' }),
+    circ: (r) => ({ coords: [0, 0, r], type: 'circle' }),
+    elps: (w, h) => ({ coords: [0, 0, w, h ?? w], type: 'ellipse' }),
+    curve: (x1, y1, x2, y2, x3, y3) =>
+      `M 0,0 C ${x1},${y1} ${x2},${y2} ${x3},${y3}`,
+    cubic_curve: (x0, y0, x1, y1, x2, y2, x3, y3) =>
+      `M ${x0},${y0} C ${x1},${y1} ${x2},${y2} ${x3},${y3}`,
     fill: (shape, color) => {
       shape.fill = color
       return shape
@@ -412,6 +419,7 @@ export const LIBRARY = {
       shape.seed = amount
       return shape
     },
+
     fill_style: (shape, style) => {
       shape.fillStyle = style
       return shape
@@ -445,11 +453,29 @@ export const LIBRARY = {
       shape.move(x, y)
       return shape
     },
-    x: (shape) => {
-      return shape.x()
+    dmove: (shape, x, y) => {
+      shape.dmove(x, y)
+      return shape
     },
-    y: (shape) => {
-      return shape.y()
+    dx: (shape, x) => {
+      shape.dx(x)
+      return shape
+    },
+    dy: (shape, y) => {
+      shape.dy(y)
+      return shape
+    },
+    x: (shape, x) => {
+      return shape.x(x)
+    },
+    y: (shape, y) => {
+      return shape.y(y)
+    },
+    width: (shape, w) => {
+      return shape.width(w)
+    },
+    heigth: (shape, h) => {
+      return shape.height(h)
     },
     size: (shape, w, h) => {
       shape.size(w, h)
@@ -466,6 +492,15 @@ export const LIBRARY = {
     opacity: (shape, o) => {
       shape.opacity(o)
       return shape
+    },
+    cx: (shape, x) => {
+      return shape.cx(x)
+    },
+    cy: (shape, y) => {
+      return shape.cy(y)
+    },
+    radius: (shape, r) => {
+      return shape.raidus(r)
     },
     center: (shape, x, y) => {
       shape.center(x, y)
