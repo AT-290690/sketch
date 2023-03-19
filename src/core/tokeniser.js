@@ -1128,6 +1128,11 @@ const tokens = {
       throw new TypeError('First argument of :: size [] must be an :: []')
     return map.size
   },
+  ['void']: () => VOID,
+  ['number']: () => 0,
+  ['string']: () => 0,
+  ['array']: () => new Inventory(),
+  ['object']: () => new Map(),
 }
 
 export { tokens }

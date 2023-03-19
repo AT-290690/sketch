@@ -13,7 +13,6 @@ export const LIBRARY = {
     NAME: 'REGEXP',
     make_regexp: (regex) => new RegExp(regex),
     match: (string, regex) => {
-      console.log(string, regex)
       return string.match(regex)
     },
     replace: (string, regex) => string.replace(regex),
@@ -192,58 +191,9 @@ export const LIBRARY = {
     replace_all: (string, match, replace) => string.replaceAll(match, replace),
     sp: ' ',
   },
-  CONVERT: {
-    NAME: 'CONVERT',
-    array: (thing) => [...thing],
-    boolean: (thing) => Boolean(thing),
-    string: (thing) => thing.toString(),
-    integer: (number) => parseInt(number.toString()),
-    float: (number, base = 1) => +Number(number).toFixed(base),
-    number: (thing) => Number(thing),
-    cast: (value, type) => {
-      if (type === '1')
-        return typeof value === 'object'
-          ? Object.keys(value).length
-          : Number(value)
-      else if (type === '')
-        return typeof value === 'object' ? JSON.stringify(value) : String(value)
-      else if (value === null || value === undefined) return VOID
-      else if (type === '.:') {
-        if (Inventory.isBrrr(value)) return value
-        else if (typeof value === 'string') return [...value]
-        else if (typeof value === 'number')
-          return [...String(value)].map(Number)
-        else if (typeof value === 'object') return Object.entries(value)
-      } else if (type === '::') {
-        if (typeof value === 'string' || Array.isArray(value))
-          return { ...value }
-        else if (typeof value === 'number') {
-          const out = { ...String(value) }
-          for (const key in out) {
-            out[key] = Number(out[key])
-          }
-          return out
-        } else if (typeof value === 'object') return value
-      } else return VOID
-    },
-  },
   CONSOLE: {
     console_log: (thing) => console.log(thing),
     NAME: 'CONSOLE',
-  },
-  LOGIC: {
-    NAME: 'LOGIC',
-    is_string: (string) => +(typeof string === 'string'),
-    is_number: (number) => +(typeof number === 'number'),
-    is_not_string: (string) => +!(typeof string === 'string'),
-    is_not_number: (number) => +!(typeof number === 'number'),
-    is_not_array: (array) => +!Inventory.isBrrr(array),
-    is_array: (array) => +Inventory.isBrrr(array),
-    is_map: (map) => +(map instanceof Map),
-    is_not_map: (map) => +!(map instanceof Map),
-    is_true: (bol) => +(!!bol === true),
-    is_false: (bol) => +(!!bol === false),
-    is_equal: (a, b) => +Inventory.of(a).isEqual(Inventory.of(b)),
   },
   LOOP: {
     NAME: 'LOOP',
@@ -344,37 +294,6 @@ export const LIBRARY = {
       Number.MAX_SAFE_INTEGER)
       for (let i = 1; i < interval_id; ++i) window.clearInterval(i)
       return interval_id
-    },
-  },
-  EVENT: {
-    NAME: 'EVENT',
-    on_input_change: (element, callback) => {
-      element.addEventListener('change', (e) => callback(e.target.value))
-      return element
-    },
-    on_mouse_click: (element, callback) => {
-      element.addEventListener('click', (e) => callback(e.target))
-      return element
-    },
-    on_mouse_over: (element, callback) => {
-      element.addEventListener('mouseover', (e) => callback(e.target))
-      return element
-    },
-    on_key_down: (element, callback) => {
-      element.addEventListener('keydown', (e) => callback(e.key))
-      return element
-    },
-    on_key_up: (element, callback) => {
-      element.addEventListener('keyup', (e) => callback(e.key))
-      return element
-    },
-    game_controller: (element, keyMap) => {
-      element.addEventListener('keydown', (e) => {
-        e.preventDefault()
-        const key = keyMap.get(e.key.toLowerCase())
-        key && key()
-      })
-      return element
     },
   },
   SKETCH: {
@@ -586,11 +505,10 @@ export const LIBRARY = {
       shape.animate(Object.fromEntries(settings)),
     ease: (runner, cmd) => runner.ease(cmd),
     beziere: (runner, x1, y1, x2, y2) => runner.beziere(x1, y1, x2, y2),
-    node: (shape) => shape.node,
+    node: (shape = { node: LIBRARY.SKETCH.CANVAS_CONTAINER }) => shape.node,
   },
 }
 
 export const STD = {
-  void: VOID,
   LIBRARY,
 }
