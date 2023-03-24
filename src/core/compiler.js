@@ -266,7 +266,7 @@ const compile = () => {
           return `${dfs(tree.args[0], locals)}.get(0);`
         case '.:last':
           return `${dfs(tree.args[0], locals)}.at(-1);`
-        case '^':
+        case '.:.':
           return `${dfs(tree.args[0], locals)}.at(${dfs(
             tree.args[1],
             locals
@@ -286,7 +286,7 @@ const compile = () => {
             tree.args.map((x) => dfs(x, locals)).join(',') +
             ')'
           )
-        case '^=':
+        case '.:.=':
           return `${dfs(tree.args[0], locals)}.set(${dfs(
             tree.args[1],
             locals
@@ -384,22 +384,22 @@ const compile = () => {
             tree.args[tree.args.length - 1].name
           });`
         }
-        case '.?':
+        case '::.?':
           return `${dfs(tree.args[0], locals)}.has(${dfs(
             tree.args[1],
             locals
           )});`
-        case '.':
+        case '::.':
           return `${dfs(tree.args[0], locals)}.get(${dfs(
             tree.args[1],
             locals
           )});`
-        case '.=':
+        case '::.=':
           return `Inventory._mapSet(${dfs(tree.args[0], locals)}, ${dfs(
             tree.args[1],
             locals
           )}, ${dfs(tree.args[2], locals)});`
-        case '.!=':
+        case '::.!=':
           return `Inventory._mapRemove(${dfs(tree.args[0], locals)}, ${dfs(
             tree.args[1],
             locals

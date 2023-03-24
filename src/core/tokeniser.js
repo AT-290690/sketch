@@ -297,7 +297,7 @@ const tokens = {
       return acc
     }, new Map())
   },
-  ['.?']: (args, env) => {
+  ['::.?']: (args, env) => {
     if (args.length !== 2)
       throw new RangeError('Invalid number of arguments for .? []')
     const prop = []
@@ -327,7 +327,7 @@ const tokens = {
         }
     }
   },
-  ['.']: (args, env) => {
+  ['::.']: (args, env) => {
     if (args.length !== 2)
       throw new RangeError('Invalid number of arguments for . []')
     const prop = []
@@ -341,7 +341,9 @@ const tokens = {
     if (args[0].type === 'apply' || args[0].type === 'value') {
       const entity = evaluate(args[0], env)
       if (entity == undefined || !entity.has(prop[0]))
-        throw new RangeError(`:: [${entity.name}] doesnt have a . [${prop[0]}]`)
+        throw new RangeError(
+          `:: [${entity.name ?? ''}] doesnt have a . [${prop[0]}]`
+        )
       const entityProperty = entity.get(prop[0])
       if (typeof entityProperty === 'function') {
         const caller = entity
@@ -361,7 +363,7 @@ const tokens = {
             )
           if (!scope[entityName].has(prop[0]))
             throw new RangeError(
-              `:: [${entityName}] doesnt have a . [${prop[0]}]`
+              `:: [${entityName ?? ''}] doesnt have a . [${prop[0]}]`
             )
           const entityProperty = scope[entityName].get(prop[0])
           if (typeof entityProperty === 'function') {
@@ -372,7 +374,7 @@ const tokens = {
         }
     }
   },
-  ['.=']: (args, env) => {
+  ['::.=']: (args, env) => {
     if (args.length !== 3)
       throw new RangeError('Invalid number of arguments for .= []')
     const main = args[0]
@@ -406,9 +408,9 @@ const tokens = {
         }
     }
   },
-  ['.!=']: (args, env) => {
+  ['::.!=']: (args, env) => {
     if (args.length !== 2)
-      throw new RangeError('Invalid number of arguments for .!= []')
+      throw new RangeError('Invalid number of arguments for :: .!=  []')
     const prop = []
     const main = args[0]
     const entityName = args[0].name
@@ -423,7 +425,9 @@ const tokens = {
     if (main.type === 'apply') {
       const entity = evaluate(main, env)
       if (entity == undefined || !(entity instanceof Map))
-        throw new TypeError(`:: ${entity} is not a instance of :: at .!= []`)
+        throw new TypeError(
+          `:: ${entity} is not a instance of :: at :: .!=  []`
+        )
       entity.set(prop[0], value)
       return entity
     } else if (main.type === 'word') {
@@ -432,11 +436,13 @@ const tokens = {
           let temp = scope[entityName]
           if (temp == undefined || !(temp instanceof Map))
             throw new TypeError(
-              `:: ${entityName} is not a instance of :: at .!= []`
+              `:: ${entityName} is not a instance of :: at :: .!=  []`
             )
 
           if (!temp.has(prop[0])) {
-            throw new TypeError(`:: "${prop[0]}" doesn't exist in :: at .!= []`)
+            throw new TypeError(
+              `:: "${prop[0]}" doesn't exist in :: at :: .!=  []`
+            )
           }
           temp.delete(prop[0])
           return temp
@@ -459,36 +465,36 @@ const tokens = {
     })
     return args[args.length - 1].name
   },
-  ['^']: (args, env) => {
+  ['.:.']: (args, env) => {
     if (args.length !== 2)
-      throw new RangeError('Invalid number of arguments to ^')
+      throw new RangeError('Invalid number of arguments to .')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of ^ must be an .: []')
+      throw new TypeError('First argument of . must be an .: []')
     const index = evaluate(args[1], env)
     if (!Number.isInteger(index))
-      throw new TypeError('Second argument of ^ must be a number')
+      throw new TypeError('Second argument of . must be a number')
     if (
       (index < 0 && !array.isInBounds(array.length + index)) ||
       (index >= 0 && !array.isInBounds(index))
     )
       throw new RangeError(
-        `Index is out of bounds ^ [${index}] .: [${array.length}]`
+        `Index is out of bounds . [${index}] .: [${array.length}]`
       )
     return array.at(index)
   },
-  ['^=']: (args, env) => {
+  ['.:.=']: (args, env) => {
     if (args.length !== 3)
-      throw new RangeError('Invalid number of arguments to ^=')
+      throw new RangeError('Invalid number of arguments to .=')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of  ^= must be an .: []')
+      throw new TypeError('First argument of  .= must be an .: []')
     const index = evaluate(args[1], env)
     if (!Number.isInteger(index))
-      throw new TypeError('Second argument of ^= must be a number')
+      throw new TypeError('Second argument of .= must be a number')
     if (!array.isInBounds(Math.abs(index)))
       throw new RangeError(
-        `Index is out of bounds ^= [${index}] .: [${array.length}]`
+        `Index is out of bounds .= [${index}] .: [${array.length}]`
       )
     return array.set(index, evaluate(args[2], env))
   },
