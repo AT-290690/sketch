@@ -262,9 +262,9 @@ const compile = () => {
             tree.args[1],
             locals
           )});`
-        case '.:first':
+        case '.:<':
           return `${dfs(tree.args[0], locals)}.get(0);`
-        case '.:last':
+        case '.:>':
           return `${dfs(tree.args[0], locals)}.at(-1);`
         case '.:.':
           return `${dfs(tree.args[0], locals)}.at(${dfs(
@@ -291,23 +291,23 @@ const compile = () => {
             tree.args[1],
             locals
           )}, ${dfs(tree.args[2], locals)});`
-        case '.:append':
+        case '.:>=':
           return `${dfs(tree.args[0], locals)}.append(${dfs(
             tree.args[1],
             locals
           )});`
-        case '.:prepend':
+        case '.:<=':
           return `${dfs(tree.args[0], locals)}.prepend(${dfs(
             tree.args[1],
             locals
           )});`
-        case '.:head':
+        case '.:>!=':
           return `${dfs(tree.args[0], locals)}.head();`
-        case '.:tail':
+        case '.:<!=':
           return `${dfs(tree.args[0], locals)}.tail();`
-        case '.:cut':
+        case '.:>!=.':
           return `${dfs(tree.args[0], locals)}.cut();`
-        case '.:chop':
+        case '.:<!=.':
           return `${dfs(tree.args[0], locals)}.chop();`
         case '.:from_string':
           return `Inventory._split(${dfs(tree.args[0], locals)}, ${dfs(

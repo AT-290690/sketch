@@ -31,7 +31,7 @@
                 next; next_is_alive;
                 view; rect]];
   add [cells_container; rect];
-  .: append [cells; cell]]]]; cells_container]];
+  .: >= [cells; cell]]]]; cells_container]];
 
 iterate_cells; -> [cells; callback; : [
 := [y; -1];

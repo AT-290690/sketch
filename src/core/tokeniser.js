@@ -921,20 +921,20 @@ const tokens = {
       throw new TypeError('Second argument of .: some [] must be an -> []')
     return +array.some(callback)
   },
-  ['.:first']: (args, env) => {
+  ['.:<']: (args, env) => {
     if (args.length !== 1)
-      throw new RangeError('Invalid number of arguments to .: first []')
+      throw new RangeError('Invalid number of arguments to .: < []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: first [] must be an .: []')
+      throw new TypeError('First argument of .: < [] must be an .: []')
     return array.first
   },
-  ['.:last']: (args, env) => {
+  ['.:>']: (args, env) => {
     if (args.length !== 1)
-      throw new RangeError('Invalid number of arguments to .: last []')
+      throw new RangeError('Invalid number of arguments to .: > []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: last [] must be an .: []')
+      throw new TypeError('First argument of .: > [] must be an .: []')
     return array.last
   },
   ['.:is_in_bounds']: (args, env) => {
@@ -948,12 +948,12 @@ const tokens = {
     const index = evaluate(args[1], env)
     return +array.isInBounds(Math.abs(index))
   },
-  ['.:append']: (args, env) => {
+  ['.:>=']: (args, env) => {
     if (args.length !== 2)
-      throw new RangeError('Invalid number of arguments to .: append []')
+      throw new RangeError('Invalid number of arguments to .: >= []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: append must be an .: []')
+      throw new TypeError('First argument of .: >= must be an .: []')
     return array.append(evaluate(args[1], env))
   },
   ['.:add_at']: (args, env) => {
@@ -996,44 +996,44 @@ const tokens = {
       )
     return array.removeFrom(index, amount)
   },
-  ['.:prepend']: (args, env) => {
+  ['.:<=']: (args, env) => {
     if (args.length !== 2)
-      throw new RangeError('Invalid number of arguments to .: prepend []')
+      throw new RangeError('Invalid number of arguments to .: <= []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: prepend [] must be an .: []')
+      throw new TypeError('First argument of .: <= [] must be an .: []')
     return array.prepend(evaluate(args[1], env))
   },
-  ['.:head']: (args, env) => {
+  ['.:>!=']: (args, env) => {
     if (args.length !== 1)
-      throw new RangeError('Invalid number of arguments to .: head []')
+      throw new RangeError('Invalid number of arguments to .: >!= []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: head [] must be an .: []')
+      throw new TypeError('First argument of .: >!= [] must be an .: []')
     return array.head()
   },
-  ['.:tail']: (args, env) => {
+  ['.:<!=']: (args, env) => {
     if (args.length !== 1)
-      throw new RangeError('Invalid number of arguments to .: tail []')
+      throw new RangeError('Invalid number of arguments to .: <!= []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: tail [] must be an .: []')
+      throw new TypeError('First argument of .: <!= [] must be an .: []')
     return array.tail()
   },
-  ['.:cut']: (args, env) => {
+  ['.:>!=.']: (args, env) => {
     if (args.length !== 1)
-      throw new RangeError('Invalid number of arguments to .: cut []')
+      throw new RangeError('Invalid number of arguments to .: >!=. []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: cut [] must be an .: []')
+      throw new TypeError('First argument of .: >!=. [] must be an .: []')
     return array.cut()
   },
-  ['.:chop']: (args, env) => {
+  ['.:<!=.']: (args, env) => {
     if (args.length !== 1)
-      throw new RangeError('Invalid number of arguments to .: chop []')
+      throw new RangeError('Invalid number of arguments to .: <!=. []')
     const array = evaluate(args[0], env)
     if (!(array.constructor.name === 'Inventory'))
-      throw new TypeError('First argument of .: chop [] must be an .: []')
+      throw new TypeError('First argument of .: <!=. [] must be an .: []')
     return array.chop()
   },
 

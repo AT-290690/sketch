@@ -80,7 +80,7 @@ tokens['~*'] = (args, env) => {
   return 0
 }
 
-const OFFSET = 123
+const OFFSET = 161
 const generateCompressionRunes = (start) => {
   return Object.keys(tokens)
     .map((t) => `${t}[`)

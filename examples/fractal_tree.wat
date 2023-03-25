@@ -27,8 +27,8 @@
   
   ;; DRAW A SINGLE BRANCH!
   |> [line [x; y; next_x; next_y]; stroke ["white"]; roughness [1.2]; draw []];
-  .: append [x_stack; x];
-  .: append [y_stack; y];
+  .: >= [x_stack; x];
+  .: >= [y_stack; y];
   = [x; next_x];
   = [y; next_y];
   = [level; + [level; 1]];
@@ -42,7 +42,7 @@
   = [angle; - [angle; * [theta; dir]]];
   = [length; * [length; / [step]]];
   = [level; - [level; 1]];
-  = [x; .: cut [x_stack]];
-  = [y; .: cut [y_stack]]]]];
+  = [x; .: >!=. [x_stack]];
+  = [y; .: >!=. [y_stack]]]]];
   
   draw_branch [0]
